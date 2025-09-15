@@ -1,3 +1,11 @@
+@mixin dFlex($direct: row, $jc: center, $ai: center) {
+    display: flex;
+    flex-direction: $direct;
+    justify-content: $jc;
+    align-items: $ai;
+}
+
+
 * {
     margin: 0;
     padding: 0;

@@ -1,9 +1,50 @@
-.start-screen {
-    margin: 0;
-    padding: 0;
+@import '../../styles.scss';
 
-    background-color: #404040;
+
+h1 {
+    color: white;
+}
+
+
+#start-screen {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 5% 0;
+
     width: 100vw;
     height: 100vh;
     max-width: 100%;
+
+    background-color: #404040;
+
+    display: flex;
+    justify-content: center;
+}
+
+
+#middle-card {
+    box-sizing: border-box;
+    border: 8px solid gold;
+    padding: 16px;
+    width: 40%;
+
+    background-color: red;
+    @include dFlex($direct: column, $jc: space-around  , $ai: center);
+
+    &>h1 {
+        font-size: 72px;
+    } 
+
+    &>button {
+        border: none;
+        padding: 16px;
+        background-color: gold;
+        font-size: 36px;
+        color: black;
+
+        &:hover {
+        cursor: pointer;
+            filter: brightness(1.25);
+        }
+    }
 }
