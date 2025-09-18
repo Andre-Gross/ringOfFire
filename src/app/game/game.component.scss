@@ -20,12 +20,12 @@
 
     img {
         position: absolute;
-        width: 120px;
+        width: 80px;
     }
 }
 
 
-#top-card {
+.top-card {
     cursor: pointer;
     transition: all 125ms ease-in-out;
 
@@ -36,7 +36,25 @@
 
 
 .draw-card {
-    transition: all 125ms ease-in-out;
-    transform: scale(1.5) !important;
+    animation: draw-card-animation 1s ease-in-out;
+    transform: scale(1.3) translateX(140px) translateY(-150px) rotate(-10deg);
+}
 
+
+@keyframes draw-card-animation {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.7);
+    }
+
+    60% {
+        transform: scale(1.7);
+    }
+
+    100% {
+        transform: scale(1.3) translateX(140px) translateY(-150px) rotate(-10deg);
+    }
 }
