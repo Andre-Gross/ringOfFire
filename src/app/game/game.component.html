@@ -1,5 +1,7 @@
 <div id="field">
     <div id="card-stack">
-        <img *ngFor="let c of [0, 1, 2, 3, 4]; let i = index;" [ngStyle]="{'right.px': i * 5}" src="/assets/img/cards/card_cover.png" alt="backside of card">
-    </div>
+        <img *ngFor="let c of [0, 1, 2, 3]; let i = index;" [ngStyle]="{'right.px': i * 5}"
+            src="/assets/img/cards/card_cover.png" alt="backside of card">
+        <img id="top-card" (click)="drawCard()" [class.draw-card]="drawCardAnimation" style="right: 25px;" src="/assets/img/cards/card_cover.png" alt="backside of card">
+        </div>
 </div>

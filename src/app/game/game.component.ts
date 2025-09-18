@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent {
+    drawCardAnimation = false;
+
+    drawCard() {
+        this.drawCardAnimation = true;
+    }
 
 }
