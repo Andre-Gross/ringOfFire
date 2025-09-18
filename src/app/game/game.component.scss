@@ -1,0 +1,25 @@
+@import '../../styles.scss';
+
+
+#field {
+    @include fullView();
+    @include dFlex();
+
+    background-image: url('/assets/img/tabletop_wood.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+#card-stack {
+    position: relative;
+
+    @include dFlex();
+    
+    
+    img {
+        position: absolute;
+        width: 120px;
+    }
+}

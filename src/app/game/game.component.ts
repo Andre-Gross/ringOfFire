@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-game.component',
-  imports: [],
+  selector: 'app-game',
+  imports: [CommonModule],
   templateUrl: './game.component.html',
-  styleUrl: './game.component.scss'
+  styleUrls: ['./game.component.scss']
 })
 export class GameComponent {
 
