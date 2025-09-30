@@ -3,13 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { Game } from '../../game';
 
 @Component({
-  selector: 'app-game',
-  imports: [CommonModule],
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+    selector: 'app-game',
+    imports: [CommonModule],
+    templateUrl: './game.component.html',
+    styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
     drawCardAnimation = false;
+    currentCard: string | undefined = '';
     game: Game = new Game();
 
 
@@ -18,13 +19,21 @@ export class GameComponent implements OnInit {
     }
 
 
-    newGame(){
+    newGame() {
         this.game = new Game();
         console.log(this.game);
     }
 
     drawCard() {
-        this.drawCardAnimation = true;
-    }
+        if (!this.drawCardAnimation) {
+            this.currentCard = this.game.stack.pop();
+            console.log(this.currentCard);
+            this.drawCardAnimation = true;
+            
+            setTimeout(() => {
+                this.drawCardAnimation = false;
+            }, 1500)
+        }
 
+    }
 }

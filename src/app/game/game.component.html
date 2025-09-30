@@ -5,6 +5,6 @@
         <img (click)="drawCard()" class="top-card" style="right: 25px;"
             src="/assets/img/cards/card_cover.png" alt="backside of card">
         <img *ngIf="drawCardAnimation" class="draw-card" style="right: 25px;"
-            src="/assets/img/cards/ace_1.png" alt="ace ass card">
+            src="/assets/img/cards/{{ currentCard }}.png" alt="{{ currentCard }}">
     </div>
 </div>
