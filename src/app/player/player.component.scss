@@ -1,0 +1,27 @@
+$profile-player-label-img-size: 100px;
+$profile-player-label-radius:  calc($profile-player-label-img-size / 2);
+
+
+.player {
+    border-top-left-radius: $profile-player-label-radius;
+    border-bottom-left-radius: $profile-player-label-radius;
+    width: 300px;
+    display: flex;
+    align-items: center;
+
+    background-color: orange;
+
+
+    img {
+        max-width: $profile-player-label-img-size;
+        max-height: $profile-player-label-img-size;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+
+
+    span {
+        margin-left: 16px;
+        font-size: 32px;
+    }
+}

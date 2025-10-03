@@ -1,6 +1,12 @@
 @import '../../styles.scss';
 
 
+.player-position {
+    position: absolute;
+    right: 0;
+}
+
+
 #field {
     @include fullView();
     @include dFlex();
