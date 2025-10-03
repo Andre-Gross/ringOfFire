@@ -1,11 +1,12 @@
-<app-player style="top: 130px" class="player-position"></app-player>
+<app-player *ngFor="let player of game.players; let i = index" [ngStyle]="{'top.px': 130 + (i * 120)}" [name]="player"
+    class="player-position"></app-player>
 
 <div id="field">
     <div id="card-stack">
         <img *ngFor="let c of [0, 1, 2, 3]; let i = index;" [ngStyle]="{'right.px': i * 5}"
             src="assets/img/cards/card_cover.png" alt="backside of card">
-        <img (click)="drawCard()" class="top-card" style="right: 25px;"
-            src="assets/img/cards/card_cover.png" alt="backside of card">
+        <img (click)="drawCard()" class="top-card" style="right: 25px;" src="assets/img/cards/card_cover.png"
+            alt="backside of card">
         <img *ngIf="drawCardAnimation" class="draw-card" style="right: 25px;"
             src="assets/img/cards/{{ currentCard }}.png" alt="{{ currentCard }}">
     </div>
