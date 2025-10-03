@@ -9,6 +9,7 @@ import { Component, Input } from '@angular/core';
 export class PlayerComponent {
 
     @Input() name!: string;
+    @Input() index!: number;
 
     constructor() {}
 
