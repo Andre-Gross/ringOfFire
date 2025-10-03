@@ -1,3 +1,7 @@
+@use './fonts';
+@use '@angular/material' as mat;
+
+
 @mixin dFlex($direct: row, $jc: center, $ai: center) {
     display: flex;
     flex-direction: $direct;
@@ -16,4 +20,30 @@
 * {
     margin: 0;
     padding: 0;
+}
+
+
+html,
+body {
+    height: 100%;
+}
+
+
+html {
+    @include mat.theme((color: (primary: mat.$azure-palette,
+                tertiary: mat.$blue-palette,
+            ),
+            typography: Roboto,
+            density: 0,
+        ));
+}
+
+body {
+    color-scheme: light;
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font: var(--mat-sys-body-medium);
+    font-family: 'Roboto', "Helvetica Neue", sans-serif;
+
+    margin: 0;
 }
