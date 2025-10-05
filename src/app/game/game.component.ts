@@ -32,7 +32,6 @@ export class GameComponent implements OnInit {
 
     newGame() {
         this.game = new Game();
-        console.log(this.game);
     }
 
     drawCard() {
@@ -50,10 +49,10 @@ export class GameComponent implements OnInit {
     openDialog(): void {
         const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-            if (result !== undefined) {
-                // this.animal.set(result);
+        dialogRef.afterClosed().subscribe((result: string) => {
+            console.log('The dialog was closed', result);
+            if (result !== undefined && result !== '') {
+                this.game.players.push(result);
             }
         });
     }

@@ -1,1 +1,12 @@
-<p>dialog-add-player.component works!</p>
+<h2 mat-dialog-title>Add new player</h2>
+<mat-dialog-content>
+    <p>Please enter the name of a player</p>
+    <mat-form-field>
+        <mat-label>Player´s name</mat-label>
+        <input matInput [(ngModel)]="name" />
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button matButton (click)="onNoClick()">No Thanks</button>
+    <button matButton [mat-dialog-close]="name" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>
