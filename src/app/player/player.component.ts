@@ -10,6 +10,7 @@ export class PlayerComponent {
 
     @Input() name!: string;
     @Input() index!: number;
+    @Input() playerActive: boolean = false;
 
     constructor() {}
 
