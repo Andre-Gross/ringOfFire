@@ -20,7 +20,7 @@ import { GameInfoComponent } from "../game-info/game-info.component";
 })
 export class GameComponent implements OnInit {
     drawCardAnimation = false;
-    currentCard: string | undefined = '';
+    currentCard!: string;
     game: Game = new Game();
 
 
@@ -43,6 +43,7 @@ export class GameComponent implements OnInit {
             this.drawCardAnimation = true;
 
             setTimeout(() => {
+                this.game.playedCards.push(this.currentCard)
                 this.drawCardAnimation = false;
             }, 1500)
         }
