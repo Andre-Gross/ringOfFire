@@ -8,5 +8,5 @@ import {MatCardModule} from '@angular/material/card';
   styleUrl: './game-info.component.scss'
 })
 export class GameInfoComponent {
-
+    
 }
