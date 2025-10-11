@@ -1,11 +1,9 @@
-import { NgStyle } from '@angular/common';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'app-game-info',
     imports: [
-        NgStyle,
         MatCardModule],
     templateUrl: './game-info.component.html',
     styleUrl: './game-info.component.scss'
