@@ -38,8 +38,7 @@ export class GameComponent implements OnInit {
 
     drawCard() {
         if (!this.drawCardAnimation) {
-            this.currentCard = this.game.stack.pop();
-            console.log(this.currentCard);
+            this.currentCard = this.game.stack.pop()!;
             this.drawCardAnimation = true;
 
             setTimeout(() => {
