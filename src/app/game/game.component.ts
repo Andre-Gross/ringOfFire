@@ -8,13 +8,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from "../game-info/game-info.component";
 
+
 @Component({
     selector: 'app-game',
-    imports: [CommonModule,
-    PlayerComponent,
-    MatButtonModule,
-    MatIconModule,
-    GameInfoComponent],
+    imports: [
+        CommonModule,
+        PlayerComponent,
+        MatButtonModule,
+        MatIconModule,
+        GameInfoComponent],
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss']
 })
@@ -24,7 +26,7 @@ export class GameComponent implements OnInit {
     game: Game = new Game();
 
 
-    constructor(public dialog: MatDialog) {}
+    constructor(public dialog: MatDialog) { }
 
 
     ngOnInit(): void {
@@ -36,17 +38,21 @@ export class GameComponent implements OnInit {
         this.game = new Game();
     }
 
+
     drawCard() {
         if (!this.drawCardAnimation) {
             this.currentCard = this.game.stack.pop()!;
             this.drawCardAnimation = true;
 
+            this.game.currentPlayer++
+            this.game.currentPlayer = this.game.currentPlayer % this.game.players().length
             setTimeout(() => {
                 this.game.playedCards.push(this.currentCard)
                 this.drawCardAnimation = false;
             }, 1500)
         }
     }
+
 
     openDialog(): void {
         const dialogRef = this.dialog.open(DialogAddPlayerComponent);
