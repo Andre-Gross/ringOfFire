@@ -11,6 +11,8 @@
             alt="backside of card">
         <img *ngIf="drawCardAnimation" class="draw-card" style="right: 25px;"
             src="assets/img/cards/{{ currentCard }}.png" alt="{{ currentCard }}">
+
+        <img *ngFor="let card of game.playedCards" class="played-card" src="./assets/img/cards/{{ card }}.png">
     </div>
 </div>
 
