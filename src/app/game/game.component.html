@@ -10,7 +10,7 @@
 
         <img *ngFor="let card of game.playedCards" class="played-card" src="./assets/img/cards/{{ card }}.png">
 
-        @if(drawCardAnimation) {
+        @if(drawCardAnimation()) {
             <img class="draw-card" style="right: 25px;" src="assets/img/cards/{{ currentCard }}.png"
             alt="{{ currentCard }}">
         }

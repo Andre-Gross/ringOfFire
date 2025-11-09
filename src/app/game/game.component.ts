@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Game } from '../../models/game';
 import { PlayerComponent } from "../player/player.component";
 import { MatButtonModule } from '@angular/material/button';
@@ -21,7 +21,7 @@ import { GameInfoComponent } from "../game-info/game-info.component";
     styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-    drawCardAnimation = false;
+    drawCardAnimation: WritableSignal<boolean> = signal<boolean>(false);
     currentCard!: string;
     game: Game = new Game();
 
@@ -40,15 +40,15 @@ export class GameComponent implements OnInit {
 
 
     drawCard() {
-        if (!this.drawCardAnimation) {
+        if (!this.drawCardAnimation()) {
             this.currentCard = this.game.stack.pop()!;
-            this.drawCardAnimation = true;
+            this.drawCardAnimation.set(true);
 
             this.game.currentPlayer++
             this.game.currentPlayer = this.game.currentPlayer % this.game.players().length
             setTimeout(() => {
                 this.game.playedCards.push(this.currentCard)
-                this.drawCardAnimation = false;
+                this.drawCardAnimation.set(false);
             }, 1500)
         }
     }
