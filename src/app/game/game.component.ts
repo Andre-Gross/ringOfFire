@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal, WritableSignal, inject } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { Game } from '../../models/game';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerComponent } from "../player/player.component";
@@ -10,6 +10,7 @@ import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player
 import { GameInfoComponent } from "../game-info/game-info.component";
 import { collection, collectionData, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
+import { GameService } from '../firebase-services/game.service.ts';
 
 
 @Component({
@@ -27,14 +28,13 @@ export class GameComponent implements OnInit {
     drawCardAnimation: WritableSignal<boolean> = signal<boolean>(false);
     currentCard!: string;
     game!: Game;
+    firestore: Firestore;
 
     unsubGame!: object;
 
 
-    firestore: Firestore = inject(Firestore);
-
-
-    constructor(private route: ActivatedRoute, public dialog: MatDialog) {
+    constructor(private gameService: GameService,  private route: ActivatedRoute, public dialog: MatDialog) {
+        this.firestore = this.gameService.firestore;
     }
 
 
@@ -60,7 +60,6 @@ export class GameComponent implements OnInit {
 
     async newGame() {
         this.game = new Game();
-        // return await this.addGame();
     }
 
 
@@ -88,20 +87,5 @@ export class GameComponent implements OnInit {
                 this.game.players.update(players => [...players, result]);
             }
         });
-    }
-
-
-    async addGame(): Promise<string | undefined> {
-        return await addDoc(this.getColRef('games'), this.game.toJSON())
-            .then((docRef) => docRef.id)
-            .catch((err) => {
-                console.error(err);
-                return undefined;
-            });
-    }
-
-
-    getColRef(colId: string) {
-        return collection(this.firestore, colId)
     }
 }
