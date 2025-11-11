@@ -17,6 +17,16 @@ export class Game {
 
         shuffle(this.stack)
     }
+
+
+    toJSON() {
+        return {
+            players: this.players(),
+            stack: this.stack,
+            playedCards: this.playedCards,
+            currentPlayer: this.currentPlayer
+        }
+    }
 }
 
 

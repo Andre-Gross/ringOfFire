@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from "../game-info/game-info.component";
-import { collection, collectionData, onSnapshot } from '@angular/fire/firestore';
+import { collection, collectionData, addDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Firestore } from '@angular/fire/firestore';
 
@@ -49,8 +49,9 @@ export class GameComponent implements OnInit {
     }
 
 
-    newGame() {
+    async newGame() {
         this.game = new Game();
+        await this.addGame();
     }
 
 
@@ -78,5 +79,19 @@ export class GameComponent implements OnInit {
                 this.game.players.update(players => [...players, result]);
             }
         });
+    }
+
+
+    async addGame() {
+        await addDoc(this.getColRef('games'), this.game.toJSON()).catch(
+            (err) => { console.error(err) }
+        ).then(
+            (docRef) => { console.log("Document written with ID: ", docRef?.id) }
+        );
+    }
+
+
+    getColRef(colId: string) {
+        return collection(this.firestore, colId)
     }
 }
