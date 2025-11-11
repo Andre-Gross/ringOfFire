@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal, WritableSignal, inject } from '@angular/core';
 import { Game } from '../../models/game';
+import { ActivatedRoute } from '@angular/router';
 import { PlayerComponent } from "../player/player.component";
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from "../game-info/game-info.component";
-import { collection, collectionData, addDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { collection, collectionData, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 
 
@@ -28,30 +28,39 @@ export class GameComponent implements OnInit {
     currentCard!: string;
     game!: Game;
 
-    games$: Observable<any[]>;
+    unsubGame!: object;
 
 
     firestore: Firestore = inject(Firestore);
 
 
-    constructor(public dialog: MatDialog) {
-        const gamesCol = collection(this.firestore, 'games');
-        this.games$ = collectionData(gamesCol);
+    constructor(private route: ActivatedRoute, public dialog: MatDialog) {
     }
 
 
-    ngOnInit(): void {
-        this.newGame();
-        this.games$
-            .subscribe((game) => {
-                console.log("Game update", game);
-            });
+    async ngOnInit(): Promise<void> {
+        await this.newGame();
+        this.route.params.subscribe((params) => {
+            console.log("Game ID is ", params['id']);
+
+            if (params['id']) {
+                this.unsubGame = onSnapshot(doc(this.firestore, 'games', params['id']), (game: any) => {
+                    console.log("Game update: ", game.data());
+                    this.game.players.set(game.data().players);
+                    this.game.stack = game.data().stack;
+                    this.game.playedCards = game.data().playedCards;
+                    this.game.currentPlayer = game.data().currentPlayer;
+                });
+            } else {
+                console.error("Failed to create game");
+            }
+        });
     }
 
 
     async newGame() {
         this.game = new Game();
-        await this.addGame();
+        // return await this.addGame();
     }
 
 
@@ -82,12 +91,13 @@ export class GameComponent implements OnInit {
     }
 
 
-    async addGame() {
-        await addDoc(this.getColRef('games'), this.game.toJSON()).catch(
-            (err) => { console.error(err) }
-        ).then(
-            (docRef) => { console.log("Document written with ID: ", docRef?.id) }
-        );
+    async addGame(): Promise<string | undefined> {
+        return await addDoc(this.getColRef('games'), this.game.toJSON())
+            .then((docRef) => docRef.id)
+            .catch((err) => {
+                console.error(err);
+                return undefined;
+            });
     }
 
 
