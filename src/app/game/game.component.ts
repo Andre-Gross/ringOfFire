@@ -42,6 +42,7 @@ export class GameComponent implements OnInit {
         await this.newGame();
         this.route.params.subscribe((params) => {
             console.log("Game ID is ", params['id']);
+            this.gameService.gameId = params['id'];
 
             if (params['id']) {
                 this.unsubGame = onSnapshot(doc(this.firestore, 'games', params['id']), (game: any) => {

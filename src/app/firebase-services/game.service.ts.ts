@@ -6,9 +6,9 @@ import { Game } from '../../models/game';
     providedIn: 'root'
 })
 export class GameService {
-    
-    firestore: Firestore = inject(Firestore);
 
+    gameId!: string;
+    firestore: Firestore = inject(Firestore);
 
     constructor() {}
 
