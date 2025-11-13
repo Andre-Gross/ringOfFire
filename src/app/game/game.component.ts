@@ -70,10 +70,14 @@ export class GameComponent implements OnInit {
 
             this.game.currentPlayer++
             this.game.currentPlayer = this.game.currentPlayer % this.game.players().length
+
             setTimeout(() => {
                 this.game.playedCards.push(this.currentCard)
                 this.drawCardAnimation.set(false);
+                this.gameService.saveGame(this.game);
             }, 1500)
+
+            this.gameService.saveGame(this.game);
         }
     }
 
@@ -85,6 +89,7 @@ export class GameComponent implements OnInit {
             console.log('The dialog was closed', result);
             if (result !== undefined && result !== '') {
                 this.game.players.update(players => [...players, result]);
+                this.gameService.saveGame(this.game);
             }
         });
     }
