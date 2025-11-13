@@ -1,5 +1,5 @@
-import { Injectable,inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
+import { Injectable, inject } from '@angular/core';
+import { Firestore, collection, collectionData, onSnapshot, doc, addDoc, updateDoc } from '@angular/fire/firestore';
 import { Game } from '../../models/game';
 
 @Injectable({
