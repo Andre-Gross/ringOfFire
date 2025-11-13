@@ -10,7 +10,7 @@ import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player
 import { GameInfoComponent } from "../game-info/game-info.component";
 import { collection, collectionData, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
-import { GameService } from '../firebase-services/game.service.ts';
+import { GameService } from '../firebase-services/game.service';
 
 
 @Component({

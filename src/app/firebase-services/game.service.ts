@@ -10,7 +10,6 @@ export class GameService {
     gameId!: string;
     firestore: Firestore = inject(Firestore);
 
-    constructor() {}
 
     async addGame(game: Game = new Game): Promise<string | undefined> {
         return await addDoc(this.getColRef('games'), game.toJSON())
