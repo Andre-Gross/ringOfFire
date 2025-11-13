@@ -1,7 +1,7 @@
 import { signal } from "@angular/core";
 
 export class Game {
-    public players = signal(['Mama', 'Ich', 'Opa', 'Oma']);
+    public players = signal<string[]>([]);
     public stack: string[] = [];
     public playedCards: string[] = [];
     public currentPlayer: number = 0;
