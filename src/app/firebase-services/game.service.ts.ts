@@ -22,8 +22,26 @@ export class GameService {
     }
 
 
+    async saveGame(game: Game) {
+        if (!game) {
+            console.error('Game ist nicht initialisiert!');
+            return;
+        }
+
+        const docRef = this.getSingleDocRef('games', this.gameId)
+        await updateDoc(docRef, game.toJSON()).catch(
+            (err) => { console.error(err) })
+            .then();
+    };
+
+
     getColRef(colId: string) {
         return collection(this.firestore, colId)
+    }
+
+
+    getSingleDocRef(colId: string, docId: string) {
+        return doc(collection(this.firestore, colId), docId);
     }
 
 }
