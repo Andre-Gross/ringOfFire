@@ -25,8 +25,6 @@ import { GameService } from '../firebase-services/game.service';
     styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-    drawCardAnimation: WritableSignal<boolean> = signal<boolean>(false);
-    currentCard!: string;
     game!: Game;
     firestore: Firestore;
 
@@ -51,6 +49,7 @@ export class GameComponent implements OnInit {
                     this.game.stack = game.data().stack;
                     this.game.playedCards = game.data().playedCards;
                     this.game.currentPlayer = game.data().currentPlayer;
+                    this.game.drawCardAnimation.set(game.data().drawCardAnimation);
                 });
             } else {
                 console.error("Failed to create game");
@@ -65,17 +64,18 @@ export class GameComponent implements OnInit {
 
 
     drawCard() {
-        if (!this.drawCardAnimation()) {
-            this.currentCard = this.game.stack.pop()!;
-            this.drawCardAnimation.set(true);
+        if (!this.game.drawCardAnimation()) {
+            this.game.currentCard = this.game.stack.pop()!;
+            this.game.drawCardAnimation.set(true);
+            this.gameService.saveGame(this.game);
 
             this.game.currentPlayer++
             this.game.currentPlayer = this.game.currentPlayer % this.game.players().length
 
             setTimeout(() => {
-                this.game.playedCards.push(this.currentCard)
-                this.drawCardAnimation.set(false);
-                this.gameService.saveGame(this.game);
+                    this.game.playedCards.push(this.game.currentCard)
+                    this.game.drawCardAnimation.set(false);
+                    this.gameService.saveGame(this.game);
             }, 1500)
 
             this.gameService.saveGame(this.game);
