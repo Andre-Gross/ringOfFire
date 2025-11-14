@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, onSnapshot, doc, addDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, addDoc, updateDoc } from '@angular/fire/firestore';
 import { Game } from '../../models/game';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class GameService {
 
     async saveGame(game: Game) {
         if (!game) {
-            console.error('Game ist nicht initialisiert!');
+            console.error('Game is not initialized!');
             return;
         }
 

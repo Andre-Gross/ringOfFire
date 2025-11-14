@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Game } from '../../models/game';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerComponent } from "../player/player.component";
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from "../game-info/game-info.component";
-import { collection, collectionData, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
+import { doc, onSnapshot } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { GameService } from '../firebase-services/game.service';
 
@@ -31,7 +31,7 @@ export class GameComponent implements OnInit {
     unsubGame!: object;
 
 
-    constructor(private gameService: GameService,  private route: ActivatedRoute, public dialog: MatDialog) {
+    constructor(private gameService: GameService, private route: ActivatedRoute, public dialog: MatDialog) {
         this.firestore = this.gameService.firestore;
     }
 
@@ -39,12 +39,10 @@ export class GameComponent implements OnInit {
     async ngOnInit(): Promise<void> {
         await this.newGame();
         this.route.params.subscribe((params) => {
-            console.log("Game ID is ", params['id']);
             this.gameService.gameId = params['id'];
 
             if (params['id']) {
                 this.unsubGame = onSnapshot(doc(this.firestore, 'games', params['id']), (game: any) => {
-                    console.log("Game update: ", game.data());
                     this.game.players.set(game.data().players);
                     this.game.stack = game.data().stack;
                     this.game.playedCards = game.data().playedCards;
@@ -67,18 +65,18 @@ export class GameComponent implements OnInit {
         if (!this.game.drawCardAnimation()) {
             this.game.currentCard = this.game.stack.pop()!;
             this.game.drawCardAnimation.set(true);
-            this.gameService.saveGame(this.game);
 
-            this.game.currentPlayer++
-            this.game.currentPlayer = this.game.currentPlayer % this.game.players().length
+            this.gameService.saveGame(this.game);
 
             setTimeout(() => {
-                    this.game.playedCards.push(this.game.currentCard)
-                    this.game.drawCardAnimation.set(false);
-                    this.gameService.saveGame(this.game);
-            }, 1500)
 
-            this.gameService.saveGame(this.game);
+                this.game.currentPlayer++
+                this.game.currentPlayer = this.game.currentPlayer % this.game.players().length
+
+                this.game.playedCards.push(this.game.currentCard)
+                this.game.drawCardAnimation.set(false);
+                this.gameService.saveGame(this.game);
+            }, 1500)
         }
     }
 
@@ -87,7 +85,6 @@ export class GameComponent implements OnInit {
         const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
         dialogRef.afterClosed().subscribe((result: string) => {
-            console.log('The dialog was closed', result);
             if (result !== undefined && result !== '') {
                 this.game.players.update(players => [...players, result]);
                 this.gameService.saveGame(this.game);
